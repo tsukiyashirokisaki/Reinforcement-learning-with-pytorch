@@ -47,9 +47,9 @@ class DeepQNetwork:
             m.weight.data.normal_(0, 0.1)
     def create_net(self):
         model = nn.Sequential(
-              nn.Linear(self.n_features,50),
+              nn.Linear(self.n_features,10),
               nn.ReLU(),
-              nn.Linear(50,self.n_actions)
+              nn.Linear(10,self.n_actions)
             )
         model=model.apply(self.init_weights)
         return model
