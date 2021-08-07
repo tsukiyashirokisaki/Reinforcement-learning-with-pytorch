@@ -1,4 +1,5 @@
 # Simple implementation of Reinforcement Learning (A3C) using Pytorch
+From [MorvanZhou pytorch-A3C](https://github.com/ikostrikov/pytorch-a3c).
 
 This is a toy example of using multiprocessing in Python to asynchronously train a
 neural network to play discrete action [CartPole](https://gym.openai.com/envs/CartPole-v0/) and

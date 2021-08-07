@@ -46,7 +46,7 @@ class Net(nn.Module):
     def choose_action(self, s):
         self.eval()
         logits, _ = self.forward(s)
-        prob = F.softmax(logits, dim=1).data
+        prob = F.softmax(logits, dim=1).detach()
         m = self.distribution(prob)
         return m.sample().numpy()[0]
 
