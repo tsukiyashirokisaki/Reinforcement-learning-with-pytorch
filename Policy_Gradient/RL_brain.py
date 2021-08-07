@@ -80,7 +80,7 @@ class PolicyGradient:
         vt = torch.tensor(discounted_ep_rs_norm,dtype=torch.float)
         # train on episode
         all_act_prob = self.net(obs)
-        loss = torch.sum(-torch.log(all_act_prob)*one_hot(actions.unsqueeze(1), self.n_actions))
+        loss = torch.sum(-torch.log(all_act_prob)*one_hot(actions.unsqueeze(1), self.n_actions)*vt)
         self.opt.zero_grad()
         loss.backward()
         self.opt.step()

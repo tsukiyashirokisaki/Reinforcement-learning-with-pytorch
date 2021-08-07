@@ -62,7 +62,7 @@ class Actor(object):
     def choose_action(self, s):
         s = torch.tensor(s[np.newaxis, :],dtype=torch.float)
         mu, sigma = self.net(s)
-        mu = torch.squeeze(mu**2)
+        mu = torch.squeeze(mu*2)
         sigma = torch.squeeze(sigma+0.1)
         self.normal_dist = torch.distributions.Normal(mu,sigma)
         self.action = torch.clamp(self.normal_dist.sample(),float(self.action_bound[0]),float(self.action_bound[1]))
@@ -95,8 +95,8 @@ class Critic(object):
         r = torch.tensor(r,dtype=torch.float)
         v =  self.net(s)
         v_ = self.net(s_)
-        td_error = torch.mean(r + GAMMA*v_ - v)
-        loss = td_error**2
+        td_error = r + GAMMA*v_ - v
+        loss = torch.mean(td_error**2)  
         self.opt.zero_grad()
         loss.backward()
         self.opt.step()
@@ -129,7 +129,7 @@ for i_episode in range(MAX_EPISODE):
     ep_rs = []
     while True:
         # if RENDER:
-        env.render()
+        # env.render()
         a = actor.choose_action(s)
 
         s_, r, done, info = env.step(np.array([a]))
